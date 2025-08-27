@@ -1,8 +1,7 @@
 # week07/.github/workflows/backend_ci.yml
 
-#Testing the workflow to trigger pipeline CI/CD
-
-#just a test
+# Testing the workflow to trigger pipeline CI/CD
+# just a test
 
 name: Backend CI - Test, Build and Push Images to ACR
 
@@ -22,6 +21,8 @@ on:
 
 # Define global environment variables that can be used across jobs
 env:
+  # ACR short name (e.g., "alimaregistry722") used for az acr login
+  ACR_NAME: alimaregistry722
   # ACR Login Server (e.g., myregistry.azurecr.io)
   # This needs to be set as a GitHub Repository Secret
   ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
@@ -128,9 +129,9 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} # Needs to be set as a GitHub Secret (Service Principal JSON)
 
-    # Login to Azure Container Registry (ACR)
+    # Login to Azure Container Registry (ACR) using the registry name
     - name: Login to Azure Container Registry
-      run: az acr login --name ${{ env.ACR_LOGIN_SERVER }}
+      run: az acr login --name ${{ env.ACR_NAME }}
 
     # Build and Push Docker image for Product Service
     - name: Build and Push Product Service Image
